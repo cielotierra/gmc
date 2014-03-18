@@ -6,30 +6,40 @@
 
 % IS: Myu, Matriks yg udah dikluster, t, 
 
-function [data_mv] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv)
+function [data_mv_baru] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv)
 % myu
 % pk
 % k
 % data
 % data_mv
 % nomor_mv
+    l_datamv = size(data_mv);
+    data_mv_baru = data_mv;
+    phi = 3.14;
 
-    l_datamv = size(data_mv); %ukuran matriks missing value
-     
     for i=1:l_datamv(1,1)
         for j=1:k
-          R(i,j) = myu(j,nomor_mv(i,2));
+            R(i,j) = myu(nomor_mv(i),j);
         end
-        temp1 = 0;
-        temp2 = 0;
+        temp_data = data_mv(i,:);
         for j=1:k
-            %covtemp = cell2mat(covmat{j});
-            covtemp = covmat{j};
-            ftemp = hitungf(data_mv(i,:),myu(j),covtemp);
-            temp1 = temp1 + R(i,j)*pk(j)*ftemp;
-            temp2 = pk(j)*ftemp;
+            temp_data(nomor_mv(i))=R(i,j);
+            
+            temp = (covmat{j});
+            temp_inv = pinv(temp);            
+            
+            f(j) = (exp( -(1/2)*(temp_data-transpose(myu(:,j)))*temp_inv*(transpose(temp_data)-myu(:,j)) )) / ( sqrt(det(2*phi*temp)));
         end
-        averageR = temp1/temp2;
-        data_mv(i,nomor_mv(i,2)) = averageR;
+        penyebut = 0;
+        pembilang = 0;
+        for j=1:k
+            penyebut = penyebut + (R(i,j)*pk(k)*f(j));
+            pembilang = pembilang + (pk(k)*f(j));
+        end
+        R_average(i) = penyebut/pembilang;
+    end
+
+    for i=1:l_datamv(1,1)
+        data_mv_baru(i,nomor_mv(i))=R_average(i);
     end
 end
