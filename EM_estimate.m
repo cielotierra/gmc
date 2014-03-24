@@ -14,7 +14,7 @@ function [data_mv_baru] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv)
 % data_mv
 % nomor_mv
     l_datamv = size(data_mv);
-    data_mv_baru = data_mv;
+    data_mv_baru = double(data_mv);
     phi = 3.14;
 
     for i=1:l_datamv(1,1)
@@ -38,8 +38,8 @@ function [data_mv_baru] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv)
         end
         R_average(i) = penyebut/pembilang;
     end
-
-    for i=1:l_datamv(1,1)
-        data_mv_baru(i,nomor_mv(i))=R_average(i);
+    
+    for i=1:(l_datamv(1,1))
+        data_mv_baru(i,(nomor_mv(i)))=(R_average(i));
     end
 end

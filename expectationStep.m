@@ -11,15 +11,6 @@ function [t] = expectationStep(data,myu,covmat,pk,k)
             %disp(temp_inv);
             %f(j) = (exp( (-1/2)*(data(i,:)-transpose(myu(:,j)))*temp*(transpose(data(i,:))-myu(:,j)) )) / ( sqrt(det(2*phi*temp)) );
             f(j) = (exp( -(1/2)*(data(i,:)-transpose(myu(:,j)))*temp_inv*(transpose(data(i,:))-myu(:,j)) )) / ( sqrt(det(2*phi*temp)));
-        end
-        
-        jumlah = 0;
-        for j=1:k
-            jumlah = jumlah + pk(j)*f(j);
-        end        
-        for j=1:k
-            t(i,j) = pk(j)*f(j)/jumlah;
-        end
-        
+        end      
     end    
 end

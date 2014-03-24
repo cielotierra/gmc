@@ -17,4 +17,4 @@ filename = 'breast_cancer_wisconsin.xlsx';
 
 [nomor_mv] = searchNan(data_mv);
 
-[data_full,data_mv_baru]= k_estimate2(data_mentah,data,random_number_record,data_mv,kluster,k,nomor_mv);
+[data_full,data_mv_baru,covmat]= k_estimate2(data_mentah,data,random_number_record,data_mv,kluster,k,nomor_mv);
