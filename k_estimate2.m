@@ -5,20 +5,20 @@ function [data_full,data_mv_baru,covmat,myu]= k_estimate2(data_mentah,data,rando
 
 	l_data_mv = size(data_mv_baru);
 	data_full = double(data_mentah);
-	%{
+	
 	for i=1:l_data_mv(1,1)
 		a = random_number_record(i);
 		b = nomor_mv(i);
 		data_full(a,b) = data_mv_baru(i,b);
 	end
-	%}
+	
 	%---------------------------------------------------------
 	% ITERATION PART
 
 	status = 0;
 	jumlah_iterasi = 0;
-%{
-	while (status~=1)|(jumlah_iterasi~=101)
+
+	while and((status~=1),(jumlah_iterasi~=5))
 		%displaying number of iteration
 		disp('Iterasi Ke-');
 		jumlah_iterasi=jumlah_iterasi+1;
@@ -51,6 +51,6 @@ function [data_full,data_mv_baru,covmat,myu]= k_estimate2(data_mentah,data,rando
 		
 		status = isequal(data_mv_baru,temp_datamv);
 	end
-	%}
+
 %end end end end end end end end end end end end end end end end end end end end end end end end end end end end 
 end

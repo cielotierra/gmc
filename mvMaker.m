@@ -1,6 +1,6 @@
 %mv maker
 
-function [data_mv,data,random_number_record] = mvMaker(data_mentah,k,presentase_mv)
+function [data_mv,data,random_number_record,data_mv_asli] = mvMaker(data_mentah,k,presentase_mv)
     l_data = size(data_mentah); %menghitung panjang data
     jumlah_mv = floor(l_data(1,1)*presentase_mv/100); %menghitung jumlah mv
     temp_data = data_mentah;
@@ -30,14 +30,18 @@ function [data_mv,data,random_number_record] = mvMaker(data_mentah,k,presentase_
         end
     end
     
-    index_mv = length(random_number_record);
+    index_mv = length(random_number_record); %jumlah record yang memiliki missing value
+
     status = 0;
     cek = [1 l_data(2)];
-    data = zeros(cek);
+    data = zeros(cek); %initial variabel, kalau ga dibuat initial variabel ga akan jalan iterasinya
+    data_mv_asli = data;
     data_mv = data;
+
     
     for i=1:l_data(1)
         cekstatus = 0;
+
         for j=1:index_mv
             if(random_number_record(j)==i)
                 cekstatus = 1;
