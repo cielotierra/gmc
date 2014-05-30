@@ -15,31 +15,31 @@ function [data_mv_baru] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv)
 % nomor_mv
     l_datamv = size(data_mv);
     data_mv_baru = double(data_mv);
-    phi = 3.14;
 
     for i=1:l_datamv(1,1)
+        temp_record = nomor_mv(i);
         for j=1:k
-            R(i,j) = myu(nomor_mv(i),j);
+            %hitung pdf per-kluster
+            temp_data(j,:) = double(data_mv(i,:));
+            temp_data(j,temp_record)=double(myu(temp_record,j));
+            f(i,j) = double(pdf_estimate(temp_data(j,:),myu(:,j),covmat{j},k));
         end
-        temp_data = data_mv(i,:);
-        for j=1:k
-            temp_data(nomor_mv(i))=R(i,j);
-            
-            temp = (covmat{j});
-            temp_inv = pinv(temp);            
-            
-            f(j) = (exp( -(1/2)*(temp_data-transpose(myu(:,j)))*temp_inv*(transpose(temp_data)-myu(:,j)) )) / ( sqrt(det(2*phi*temp)));
-        end
-        penyebut = 0;
+
+        %Hitung Weight Average
+        %pembilang
         pembilang = 0;
+        penyebut = 0;
         for j=1:k
-            penyebut = penyebut + (R(i,j)*pk(k)*f(j));
-            pembilang = pembilang + (pk(k)*f(j));
+            pembilang = pembilang + myu(temp_record,j)*pk(j)*f(i,j);
+            penyebut = penyebut + pk(j)*f(i,j);
         end
-        R_average(i) = penyebut/pembilang;
-    end
-    
-    for i=1:(l_datamv(1,1))
-        data_mv_baru(i,(nomor_mv(i)))=(R_average(i));
+        %{disp('pembilang');
+        disp(pembilang);
+        disp('penyebut');
+        disp(penyebut);
+        %}
+        R(i) = pembilang/penyebut;
+        %disp(R(i));
+        data_mv_baru(i,temp_record)=R(i);
     end
 end

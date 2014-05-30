@@ -10,11 +10,13 @@ function [kluster] = kmeans(k,data)
             titik_random(i,j) = data(random_number(i),j);
         end
     end
-    
+
     status = 0;
     cek = 0;
 
-    while status==0
+    disp('sebelum iterasi');
+
+    while (status==0)
 
         cek = cek + 1; %buat cek jumlah iterasi
     
@@ -61,11 +63,13 @@ function [kluster] = kmeans(k,data)
             end
         end
 
+        disp('Pengecekan Konvergen');
+
         %pengecekan konvergen atau tidak
 
         if (temp2~=titik_random)
             for i=1:k
-                for j=1:4
+                for j=1:l_data(1,2)
                     titik_random(i,j) = temp2(i,j);
                 end
             end

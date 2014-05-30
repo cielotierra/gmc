@@ -29,7 +29,7 @@ for i=1:k
 end
 
 for i=1:l_data(1,1)
-    temp = ( (transpose (data(i,:) ) - myu(:,kluster(i)) )* (data(i,:) - transpose( myu(:,kluster(i)) ) ) );
+    temp = ( (transpose (data(i,:) ) - myu(:,kluster(i)) )*(data(i,:) - transpose( myu(:,kluster(i)) ) ) );
     temp_jumlah{kluster(i)} = cell2mat(temp_jumlah(kluster(i))) + temp;
 end
 
@@ -37,6 +37,9 @@ for i=1:k
     temp = 1/length(C{i})*temp_jumlah{i};
     covmat{i} = deal(temp);
 end
+
+
+
 
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
