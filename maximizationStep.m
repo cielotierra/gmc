@@ -6,21 +6,6 @@ function [myu,covmat,pk,C] = maximizationStep(data,kluster,k)
     sz = [k,l_data(1,2)];
     temp = zeros(sz);
 
-%{
-    for i=1:l_data(1,1)
-        temp(kluster(i),:) = temp(kluster(i),:) + data(i,:);
-    end
-
-    C = preDataKluster(data,kluster,k);
-
-    for i=1:k
-        panjang_matriks = size(C{i});
-        for j=1:l_data(1,2)
-            myu(i,j) = temp(i,j)/panjang_matriks(1,1);
-        end
-    end
-%}
-
     C = preDataKluster(data,kluster,k);
 
     for i=1:k
@@ -46,13 +31,7 @@ function [myu,covmat,pk,C] = maximizationStep(data,kluster,k)
         temp = 1/length(C{i})*temp_jumlah{i};
         covmat{i} = deal(temp);
     end
-  
- 
-  %{
-    for i=1:k
-        covmat{i} = eye(l_data(1,2));
-    end
-%}
+   
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 %perhitungan peluang setiap kluster

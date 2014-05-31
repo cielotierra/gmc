@@ -17,9 +17,14 @@ filename = 'SPECT.xlsx';
 
 [nomor_mv] = searchNan(data_mv);
 
-[data_full,data_mv_baru,covmat,myu]= k_estimate2(data_mentah,data,random_number_record,data_mv,kluster,k,nomor_mv);
+[data_full,data_mv_baru,covmat,myu]= k_estimate(data_mentah,data,random_number_record,data_mv,kluster,k,nomor_mv);
 
 %checking
 %TEMPORARY
-hasil_akurasi = data_mv_asli - data_mv_baru;
-disp (hasil_akurasi);
+
+[y_guess,y_ans] = data_filter(data_mv,data_mv_baru,data_mv_asli);
+
+[rmse] = rmse_estimate(y_guess,y_ans);
+
+disp('rmse');
+disp(rmse);

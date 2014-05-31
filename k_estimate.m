@@ -1,4 +1,4 @@
-function [data_full,data_mv_baru,covmat,myu]= k_estimate2(data_mentah,data,random_number_record,data_mv,kluster,k,nomor_mv)
+function [data_full,data_mv_baru,covmat,myu]= k_estimate(data_mentah,data,random_number_record,data_mv,kluster,k,nomor_mv)
 	% INITIALIZATION PART
 	[myu,covmat,pk,C] = maximizationStep(data,kluster,k);
 	[data_mv_baru] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv);
@@ -51,6 +51,4 @@ function [data_full,data_mv_baru,covmat,myu]= k_estimate2(data_mentah,data,rando
 		
 		status = isequal(data_mv_baru,temp_datamv);
 	end
-
-%end end end end end end end end end end end end end end end end end end end end end end end end end end end end 
 end

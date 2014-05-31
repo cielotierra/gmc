@@ -1,18 +1,12 @@
 % EM_Estimate
 % estimate missing entries row by row
-
-% information:
-% R = a row of matrix
-
-% IS: Myu, Matriks yg udah dikluster, t, 
-
 function [data_mv_baru] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv)
-% myu
-% pk
-% k
-% data
-% data_mv
-% nomor_mv
+% myu = mean
+% pk = probability of cluster
+% k = number of cluster
+% data = original data
+% data_mv = data with missing value (NaN)
+% nomor_mv = nomor atribut yang memiliki missing value
     l_datamv = size(data_mv);
     data_mv_baru = double(data_mv);
 
@@ -26,20 +20,13 @@ function [data_mv_baru] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv)
         end
 
         %Hitung Weight Average
-        %pembilang
         pembilang = 0;
         penyebut = 0;
         for j=1:k
             pembilang = pembilang + myu(temp_record,j)*pk(j)*f(i,j);
             penyebut = penyebut + pk(j)*f(i,j);
         end
-        %{disp('pembilang');
-        disp(pembilang);
-        disp('penyebut');
-        disp(penyebut);
-        %}
         R(i) = pembilang/penyebut;
-        %disp(R(i));
         data_mv_baru(i,temp_record)=R(i);
     end
 end
