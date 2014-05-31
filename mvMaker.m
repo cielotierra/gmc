@@ -35,10 +35,8 @@ function [data_mv,data,random_number_record,data_mv_asli] = mvMaker(data_mentah,
     status = 0;
     cek = [1 l_data(2)];
     data = zeros(cek); %initial variabel, kalau ga dibuat initial variabel ga akan jalan iterasinya
-    data_mv_asli = data;
     data_mv = data;
-
-    
+  
     for i=1:l_data(1)
         cekstatus = 0;
 
@@ -65,6 +63,21 @@ function [data_mv,data,random_number_record,data_mv_asli] = mvMaker(data_mentah,
             else
                 data(ix(1,1)+1,:)=temp_data(i,:);
             end
+        end
+    end
+
+    ix_mv_asli = 0;
+    for i=1:l_data(1)
+        cekstatus = 0;
+        for j=1:index_mv
+            if(random_number_record(j)==i)
+                cekstatus = 1;
+                break;
+            end
+        end
+        if(cekstatus==1)
+            ix_mv_asli = ix_mv_asli+1;
+            data_mv_asli(ix_mv_asli,:) = data_mentah(i,:);
         end
     end
 end
