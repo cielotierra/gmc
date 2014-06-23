@@ -1,6 +1,6 @@
 %searching record NaN
 
-function [nomor_mv] = searchNan(data_mv)
+function [nomor_mv,l_datamv] = searchNan(data_mv)
     %search number atribute
     
     l_datamv = size(data_mv);

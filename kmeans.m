@@ -17,7 +17,6 @@ function [kluster] = kmeans(k,data)
     disp('sebelum iterasi');
 
     while (status==0)
-
         cek = cek + 1; %buat cek jumlah iterasi
     
         for g=1:l_data(1,1) %untuk iterasi data
@@ -66,6 +65,10 @@ function [kluster] = kmeans(k,data)
         disp('Pengecekan Konvergen');
 
         %pengecekan konvergen atau tidak
+
+        if(cek==100)
+            break;
+        end
 
         if (temp2~=titik_random)
             for i=1:k

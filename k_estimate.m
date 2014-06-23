@@ -1,4 +1,4 @@
-function [data_full,data_mv_baru,covmat,myu]= k_estimate(data_mentah,data,random_number_record,data_mv,kluster,k,nomor_mv)
+function [data_full,data_mv_baru,covmat,myu,jumlah_iterasi]= k_estimate(data_mentah,data,random_number_record,data_mv,kluster,k,nomor_mv)
 	% INITIALIZATION PART
 	[myu,covmat,pk,C] = maximizationStep(data,kluster,k);
 	[data_mv_baru] = EM_estimate(myu,covmat,pk,k,data_mv,nomor_mv);
@@ -18,7 +18,10 @@ function [data_full,data_mv_baru,covmat,myu]= k_estimate(data_mentah,data,random
 	status = 0;
 	jumlah_iterasi = 0;
 
-	while and((status~=1),(jumlah_iterasi~=5))
+	while and((status~=1),(jumlah_iterasi~=100))
+		backup_data_full = data_full;
+		backup_data_mv_baru = data_mv_baru;
+
 		%displaying number of iteration
 		disp('Iterasi Ke-');
 		jumlah_iterasi=jumlah_iterasi+1;
@@ -48,7 +51,15 @@ function [data_full,data_mv_baru,covmat,myu]= k_estimate(data_mentah,data,random
 		for i=1:l_data_mv
 			data_full(random_number_record(i),:) = data_mv_baru(i,:);
 		end
-		
+
+		cek = checkingNaN(data_full);
+		if(cek==1)
+			disp('NaN');
+			data_full = backup_data_full;
+			data_mv_baru = backup_data_mv_baru;
+			break;
+		end
+
 		status = isequal(data_mv_baru,temp_datamv);
 	end
 end
